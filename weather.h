@@ -4,6 +4,8 @@
 
 #include <string>
 #include <vector>
+#include <chrono>
+#include <cstdint>
 
 struct Weather_Rates{
 	std::string name;
@@ -462,5 +464,7 @@ const std::vector<Weather_Data> WData = {
 	 * not up to it in game so I'll worry about it another day :)
 	 */
 };
+
+std::vector<std::string> weather_forecast(std::string r, std::string z);
 
 #endif //WEATHER_H
