@@ -200,7 +200,177 @@ const std::vector<Weather_Rates> MorDhona = {
 	{"clear skies",15},
 	{"fair skies",25}
 };
-//zones
+//Coerthas
+const std::vector<Weather_Rates> Ishgard = {
+	{"snow",60},
+	{"fair skies",10},
+	{"clear skies",5},
+	{"clouds",15},
+	{"fog",10}
+};
+const std::vector<Weather_Rates> CoerthasWH = {
+	{"blizzard",20},
+	{"snow",40},
+	{"fair skies",10},
+	{"clear skies",5},
+	{"clouds",15},
+	{"fog",10}
+};
+const std::vector<Weather_Rates> CoerthasCH = {
+	{"blizzard",20},
+	{"snow",40},
+	{"fair skies",10},
+	{"clear skies",5},
+	{"clouds",15},
+	{"fog",10}
+};
+//Abalathia's Spine
+const std::vector<Weather_Rates> SeaOfClouds = {
+	{"clear skies",30},
+	{"fair skies",30},
+	{"clouds",10},
+	{"fog",10},
+	{"wind",10},
+	{"umbral wind",10}
+};
+const std::vector<Weather_Rates> AzysLla = {
+	{"fair skies",35},
+	{"clouds",35},
+	{"thunder",30}
+};
+//Dravania
+const std::vector<Weather_Rates> DForelands = {
+	{"clouds",10},
+	{"fog",10},
+	{"thunder",10},
+	{"dust storms",10},
+	{"clear skies",30},
+	{"fair skies",30}
+};
+const std::vector<Weather_Rates> DHinterlands = {
+	{"clouds",10},
+	{"fog",10},
+	{"rain",10},
+	{"showers",10},
+	{"clear skies",30},
+	{"fair skies",30}
+};
+const std::vector<Weather_Rates> CMists = {
+	{"clouds",10},
+	{"gales",10},
+	{"umbral static",20},
+	{"clear skies",30},
+	{"fair skies",30}
+};
+const std::vector<Weather_Rates> Idyllshire = {
+	{"clouds",10},
+	{"fog",10},
+	{"rain",10},
+	{"showers",10},
+	{"clear skies",30},
+	{"fair skies",30}
+};
+//Gyr Abania
+const std::vector<Weather_Rates> RReach = {
+	{"clear skies",15},
+	{"fair skies",45},
+	{"clouds",20},
+	{"fog",10},
+	{"thunder",10}
+};
+const std::vector<Weather_Rates> Fringes = {
+	{"clear skies",15},
+	{"fair skies",45},
+	{"clouds",20},
+	{"fog",10},
+	{"thunder",10}
+};
+const std::vector<Weather_Rates> Peaks = {
+	{"clear skies",10},
+	{"fair skies",50},
+	{"clouds",15},
+	{"fog",10},
+	{"wind",10},
+	{"dust storms",5}
+};
+const std::vector<Weather_Rates> Lochs = {
+	{"clear skies",20},
+	{"fair skies",40},
+	{"clouds",20},
+	{"fog",10},
+	{"thunderstorms",10}
+};
+//Hingashi
+const std::vector<Weather_Rates> Kugane = {
+	{"rain",10},
+	{"fog",10},
+	{"clouds",20},
+	{"fair skies",40},
+	{"clear skies",20}
+};
+const std::vector<Weather_Rates> Shirogane = {
+	{"rain",10},
+	{"fog",10},
+	{"clouds",20},
+	{"fair skies",40},
+	{"clear skies",20}	
+};
+//Othard
+const std::vector<Weather_Rates> RubySea = {
+	{"thunder",10},
+	{"wind",10},
+	{"clouds",15},
+	{"fair skies",40},
+	{"clear skies",25}
+};
+const std::vector<Weather_Rates> Yanxia = {
+	{"showers",5},
+	{"rain",10},
+	{"fog",10},
+	{"clouds",15},
+	{"fair skies",40},
+	{"clear skies",20}
+};
+const std::vector<Weather_Rates> ASteppe = {
+	{"gales",5},
+	{"wind",5},
+	{"rain",7},
+	{"fog",8},
+	{"clouds",10},
+	{"fair skies",40},
+	{"clear skies",25}
+};
+//Eureka
+const std::vector<Weather_Rates> EAnemos = {
+	{"fair skies",30},
+	{"gales",30},
+	{"showers",30},
+	{"snow",10}
+};
+const std::vector<Weather_Rates> EPagos = {
+	{"clear skies",10},
+	{"fog",18},
+	{"heat waves",18},
+	{"snow",18},
+	{"thunder",18},
+	{"blizzard",18}
+};
+const std::vector<Weather_Rates> EPyros = {
+	{"fair skies",10},
+	{"heat waves",18},
+	{"thunder",18},
+	{"blizzard",18},
+	{"umbral wind",18},
+	{"snow",18}
+};
+const std::vector<Weather_Rates> EHydatos = {
+	{"fair skies",12},
+	{"showers",22},
+	{"gloom",22},
+	{"thunderstorms",22},
+	{"snow",22}
+};
+//zones lists
 const std::vector<Zone_Data> LN_Zones = {
 	{"Limsa Lominsa", Limsa},
 	{"Middle La Noscea", MiddleLN},
@@ -230,7 +400,43 @@ const std::vector<Zone_Data> Than_Zones = {
 	{"The Goblet", Goblet}
 };
 const std::vector<Zone_Data> Mor_Zones = {
-	{"Mor Dhona", }
+	{"Mor Dhona", MorDhona}
+};
+const std::vector<Zone_Data> Coerthas_Zones = {
+	{"Ishgard", Ishgard},
+	{"Coerthas Central Highlands", CoerthasCH},
+	{"Coerthas Western Highlands", CoerthasWH}
+};
+const std::vector<Zone_Data> Abalathia_Zones = {
+	{"The Sea of Clouds", SeaOfClouds},
+	{"Azys Lla", AzysLla}
+};
+const std::vector<Zone_Data> Dravania_Zones = {
+	{"Idyllshire", Idyllshire},
+	{"The Dravanian Forelands", DForelands},
+	{"The Dravanian Hinterlands", DHinterlands},
+	{"The Churning Mists", CMists}
+};
+const std::vector<Zone_Data> Gyr_Zones = {
+	{"Rhalgr's Reach", RReach},
+	{"The Fringes", Fringes},
+	{"The Peaks", Peaks},
+	{"The Lochs", Lochs}
+};
+const std::vector<Zone_Data> Hingashi_Zones = {
+	{"Kugane", Kugane},
+	{"Shirogane", Shirogane}
+};
+const std::vector<Zone_Data> Othard_Zones = {
+	{"The Ruby Sea", RubySea},
+	{"Yanxia", Yanxia},
+	{"The Azim Steppe", ASteppe}
+};
+const std::vector<Zone_Data> Eureka_Zones = {
+	{"Anemos", EAnemos},
+	{"Pagos", EPagos},
+	{"Pyros", EPyros},
+	{"Hydatos", EHydatos}
 };
 //regions
 const std::vector<Weather_Data> WData = {
@@ -240,13 +446,14 @@ const std::vector<Weather_Data> WData = {
 	{"Thanalan", Than_Zones},
 	{"Mor Dhona", Mor_Zones},
 	//3.0
-	{"Coerthas", },
-	{"Abalathia's Spine", },
-	{"Dravania", },
+	{"Coerthas", Coerthas_Zones},
+	{"Abalathia's Spine", Abalathia_Zones},
+	{"Dravania", Dravania_Zones},
 	//4.0
-	{"Gyr Abania", },
-	{"Hingashi", },
-	{"Othard", },
+	{"Gyr Abania", Gyr_Zones},
+	{"Hingashi", Hingashi_Zones},
+	{"Othard", Othard_Zones},
+	{"Eureka", Eureka_Zones}
 	//5.0
 	//6.0
 	//7.0
