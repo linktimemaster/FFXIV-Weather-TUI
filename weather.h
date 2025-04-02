@@ -6,6 +6,7 @@
 #include <vector>
 #include <chrono>
 #include <cstdint>
+#include <cmath>
 
 struct Weather_Rates{
 	std::string name;
