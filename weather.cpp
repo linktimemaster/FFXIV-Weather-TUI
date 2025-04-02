@@ -1,9 +1,10 @@
 #include "weather.h"
-#include <iostream> //for debug TODO remove this
+#include <iostream>
 
-uint32_t get_weather_value(double hrs=0){//algorithm based on https://github.com/xivapi/ffxiv-datamining/blob/master/docs/Weather.md which is in turn based on the SaintCoinach library
+uint32_t get_weather_value(int hrs){//algorithm based on https://github.com/xivapi/ffxiv-datamining/blob/master/docs/Weather.md which is in turn based on the SaintCoinach library
 	using namespace std::chrono;
-	auto local_time = duration_cast<seconds>(system_clock::now().time_since_epoch()).count() + (hrs*8*175*1000);
+	auto base_time = duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+	auto local_time = base_time + (hrs*8*175);
 	double bell = local_time/175;
 	uint32_t increment = (uint32_t)fmod((bell + 8 - fmod(bell,8.0)), 24.0);
 	uint32_t total_days = (uint32_t)((double)local_time / 4200.0);
@@ -21,14 +22,17 @@ std::vector<std::string> weather_forecast(std::string r, std::string z){
 		if(wd.Region == r){
 			for (auto& zd : wd.Zones){
 				if(zd.Zone == z){
-					unsigned int weather_value = get_weather_value();
-					std::cout<<"Weather Val:"<<weather_value<<std::endl;
-					unsigned int total_rate = 0;
-					for (size_t i = 0; i < zd.Rates.size()-1; i++){
-						total_rate += zd.Rates[i].rate;
-						if(weather_value < total_rate){
-							forecast.push_back(zd.Rates[i].name);
-							return forecast;//just for testing, remove and add more calls for longer forecast
+					for(int h = 0; h < 4; h ++){
+						std::cout<<h<<std::endl;
+						unsigned int weather_value = get_weather_value(h);
+						unsigned int total_rate = 0;
+						for (size_t i = 0; i < zd.Rates.size()-1; i++){
+							total_rate += zd.Rates[i].rate;
+							if(weather_value < total_rate){
+								forecast.push_back(zd.Rates[i].name);
+								std::cout<<"wv:"<<weather_value<<'\n'<<zd.Rates[i].name<<std::endl;
+								break;
+							}
 						}
 					}
 				}
