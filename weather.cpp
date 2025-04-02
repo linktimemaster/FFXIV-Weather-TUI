@@ -26,7 +26,7 @@ std::vector<std::string> weather_forecast(std::string r, std::string z){
 						//std::cout<<h<<std::endl;
 						unsigned int weather_value = get_weather_value(h);
 						unsigned int total_rate = 0;
-						for (size_t i = 0; i < zd.Rates.size()-1; i++){
+						for (size_t i = 0; i < zd.Rates.size(); i++){
 							total_rate += zd.Rates[i].rate;
 							if(weather_value < total_rate){
 								forecast.push_back(zd.Rates[i].name);
