@@ -1,5 +1,5 @@
 #include "weather.h"
-#include <iostream>
+//#include <iostream>
 
 uint32_t get_weather_value(int hrs){//algorithm based on https://github.com/xivapi/ffxiv-datamining/blob/master/docs/Weather.md which is in turn based on the SaintCoinach library
 	using namespace std::chrono;
@@ -23,14 +23,14 @@ std::vector<std::string> weather_forecast(std::string r, std::string z){
 			for (auto& zd : wd.Zones){
 				if(zd.Zone == z){
 					for(int h = 0; h < 4; h ++){
-						std::cout<<h<<std::endl;
+						//std::cout<<h<<std::endl;
 						unsigned int weather_value = get_weather_value(h);
 						unsigned int total_rate = 0;
 						for (size_t i = 0; i < zd.Rates.size()-1; i++){
 							total_rate += zd.Rates[i].rate;
 							if(weather_value < total_rate){
 								forecast.push_back(zd.Rates[i].name);
-								std::cout<<"wv:"<<weather_value<<'\n'<<zd.Rates[i].name<<std::endl;
+								//std::cout<<"wv:"<<weather_value<<'\n'<<zd.Rates[i].name<<std::endl;
 								break;
 							}
 						}
