@@ -1,4 +1,4 @@
-#include "weather.h"
+#include "../include/weather.h"
 //#include <iostream>
 
 uint32_t get_weather_value(int hrs){//algorithm based on https://github.com/xivapi/ffxiv-datamining/blob/master/docs/Weather.md which is in turn based on the SaintCoinach library
