@@ -115,7 +115,7 @@ int main(void) {
         });
         img_path = "../FFXIV_Weather_Icons/" + img_path + "_icon.webp";
         return hflow({
-          window(text(forecasts[0]),image_view(img_path)) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
+          window(text(forecasts[0]),image_view(img_path),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
           text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is " + forecasts[0]) | center | flex
         }); 
       }),

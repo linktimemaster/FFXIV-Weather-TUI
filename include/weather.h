@@ -140,9 +140,9 @@ const std::vector<Weather_Rates> LavBeds = {
 	{"rain",15},
 	{"fog",10},
 	{"clouds",10},
-	{"fairSkies",15},
-	{"clearSkies",30},
-	{"fairSkies",15}
+	{"fair skies",15},
+	{"clear skies",30},
+	{"fair skies",15}
 };
 //Thanalan
 const std::vector<Weather_Rates> Uldah = {
