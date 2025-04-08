@@ -6,7 +6,6 @@
 #include "image_view.hpp"
 #include <iostream>
 #include <memory>
-#include <fstream>
 #include <vector>
 #include "../include/weather.h"
 
@@ -17,18 +16,25 @@ Component Window(std::string title, Component component) {
     return window(text(title), component->Render());
   });
 }
+Component Window_Frame(std::string title, Component component) {
+  return Renderer(component, [component, title] {
+    return window(text(title), component->Render() | vscroll_indicator | frame | size(HEIGHT, LESS_THAN, 10));
+  });
+}
 
-int main(void) {
-
-  //std::ifstream ifs ("../icons/umbral_wind.ans");
-  std::ifstream ifs ("../ascii-art.txt");
-  std::string uw = {std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>{}};
-  
+int main(void) { 
   std::vector<std::string> Regions{
     "La Noscea",
     "Thanalan",
     "The Black Shroud",
     "Mor Dhona",
+    "Coerthas",
+    "Abalathia's Spine",
+    "Dravania",
+    "Gyr Abania",
+    "Hingashi",
+    "Othard",
+    "Eureka",
   };
   int selected_region = 0;
   
@@ -66,6 +72,43 @@ int main(void) {
   std::vector<std::string> Mor_Zones = {
     "Mor Dhona",
   };
+  std::vector<std::string> Coerthas_Zones = {
+    "Ishgard",
+    "Coerthas Central Highlands",
+    "Coerthas Western Highlands",
+  };
+  std::vector<std::string> Abalathia_Zones = {
+    "The Sea of Clouds",
+    "Azys Lla",
+  };
+  std::vector<std::string> Dravania_Zones = {
+    "Idyllshire",
+    "The Dravanian Forelands",
+    "The Dravanian Hinterlands",
+    "The Churning Mists",
+  };
+  std::vector<std::string> Gyr_Zones = {
+    "Rhalgr's Reach",
+    "The Fringes",
+    "The Peaks",
+    "The Lochs",
+  };
+  std::vector<std::string> Hingashi_Zones = {
+    "Kugane",
+    "Shirogane",
+  };
+  std::vector<std::string> Othard_Zones = {
+    "The Ruby Sea",
+    "Yanxia",
+    "The Azim Steppe",
+  };
+  std::vector<std::string> Eureka_Zones = {
+    "Anemos",
+    "Pagos",
+    "Pyros",
+    "Hydatos",
+  };
+  
 
   auto tabs = Container::Tab(
       {
@@ -73,13 +116,18 @@ int main(void) {
         Window("Thanalan Zones",Radiobox(&Than_Zones,&selected_zone)),
         Window("The Black Shroud Zones",Radiobox(&BS_Zones,&selected_zone)),
         Window("Mor Dhona Zone",Radiobox(&Mor_Zones,&selected_zone)),
+        Window("Coerthas Zones",Radiobox(&Coerthas_Zones,&selected_zone)),
+        Window("Abalathia's Spine Zones",Radiobox(&Abalathia_Zones,&selected_zone)),
+        Window("Dravania Zones",Radiobox(&Dravania_Zones,&selected_zone)),
+        Window("Gyr Abania Zones",Radiobox(&Gyr_Zones,&selected_zone)),
+        Window("Hingashi Zones",Radiobox(&Hingashi_Zones,&selected_zone)),
+        Window("Othard Zones",Radiobox(&Othard_Zones,&selected_zone)),
+        Window("Eureka Zones",Radiobox(&Eureka_Zones,&selected_zone)),
       },
       &selected_region);
   
   auto screen = ScreenInteractive::Fullscreen();
 
-  //auto middle = Renderer([&] { return paragraph(uw) | center; });
-  //auto middle = Renderer([&] { return text("Selected Region: " + Regions[selected_region]) | center; });
   std::vector<std::string> forecasts;
   std::string curr_zone;
   switch(selected_region){
@@ -99,14 +147,45 @@ int main(void) {
       curr_zone = Mor_Zones[0];
       forecasts = weather_forecast(Regions[selected_region], Mor_Zones[0]);
       break;
+    case 4:
+      curr_zone = Coerthas_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region], Coerthas_Zones[selected_zone]);
+      break;
+    case 5:
+      curr_zone = Abalathia_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region], Abalathia_Zones[selected_zone]);
+      break;
+    case 6:
+      curr_zone = Dravania_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region], Dravania_Zones[selected_zone]);
+      break;
+    case 7:
+      curr_zone = Gyr_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region], Gyr_Zones[selected_zone]);
+      break;
+    case 8:
+      curr_zone = Hingashi_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region], Hingashi_Zones[selected_zone]);
+      break;
+    case 9:
+      curr_zone = Othard_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region],Othard_Zones[selected_zone]);
+      break;
+    case 10:
+      curr_zone = Eureka_Zones[selected_zone];
+      forecasts = weather_forecast(Regions[selected_region],Eureka_Zones[selected_zone]);
+      break;
     default:
       curr_zone = LN_Zones[0];
       forecasts = weather_forecast("La Nocea", "Limsa Lominsa");
   }
   auto h_container = Container::Horizontal({
-    tabs,
     Renderer([&]{ return text(forecasts[1]) | center | flex; }),
   });
+  auto lcont = Container::Vertical({
+      Window_Frame("Regions", region_menu),
+      tabs,
+      });
   auto container = Container::Vertical({ 
       Renderer([&]{
         std::string img_path = forecasts[0];    
@@ -121,8 +200,8 @@ int main(void) {
       }),
       h_container,
   });
-  int left_size = 20;
-  auto left = Window("Regions", region_menu);
+  int left_size = 30;
+  auto left = lcont;
   container = ResizableSplitLeft(left, container, &left_size);
   auto renderer =
       Renderer(container, [&] { 
@@ -146,11 +225,46 @@ int main(void) {
               curr_zone = Mor_Zones[0];
               forecasts = weather_forecast(Regions[selected_region], Mor_Zones[0]);
               break;
+            case 4:
+              if(selected_zone >= Coerthas_Zones.size()) selected_zone = Coerthas_Zones.size()-1;
+              curr_zone = Coerthas_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region], Coerthas_Zones[selected_zone]);
+              break;
+            case 5:
+              if(selected_zone >= Abalathia_Zones.size()) selected_zone = Abalathia_Zones.size()-1;
+              curr_zone = Abalathia_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region], Abalathia_Zones[selected_zone]);
+              break;
+            case 6:
+              if(selected_zone >= Dravania_Zones.size()) selected_zone = Dravania_Zones.size()-1;
+              curr_zone = Dravania_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region], Dravania_Zones[selected_zone]);
+              break;
+            case 7:
+              if(selected_zone >= Gyr_Zones.size()) selected_zone = Gyr_Zones.size()-1;
+              curr_zone = Gyr_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region], Gyr_Zones[selected_zone]);
+              break;
+            case 8:
+              if(selected_zone >= Hingashi_Zones.size()) selected_zone = Hingashi_Zones.size()-1;
+              curr_zone = Hingashi_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region], Hingashi_Zones[selected_zone]);
+              break;
+            case 9:
+              if(selected_zone >= Othard_Zones.size()) selected_zone = Othard_Zones.size()-1;
+              curr_zone = Othard_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region],Othard_Zones[selected_zone]);
+              break;
+            case 10:
+              if(selected_zone >= Eureka_Zones.size()) selected_zone = Eureka_Zones.size()-1;
+              curr_zone = Eureka_Zones[selected_zone];
+              forecasts = weather_forecast(Regions[selected_region],Eureka_Zones[selected_zone]);
+              break;
             default:
               curr_zone = LN_Zones[0];
               forecasts = weather_forecast("La Nocea", "Limsa Lominsa");
           }
-          return window(text("FFXIV Weather Forcast"), container->Render());
+          return window(text("FFXIV Weather Forecast"), container->Render());
       });
 
   screen.Loop(renderer);
