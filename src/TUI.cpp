@@ -22,6 +22,22 @@ Component Window_Frame(std::string title, Component component) {
   });
 }
 
+std::string getImgPath(std::string s){
+  std::string img_path = s;    
+  std::transform(img_path.begin(), img_path.end(), img_path.begin(), [](char ch) {
+    return ch == ' ' ? '_' : ch;
+  });
+  return img_path = "../FFXIV_Weather_Icons/" + img_path + "_icon.webp";
+}
+
+Element makeForecast(std::string forecast){
+  return vbox({
+      image_view(getImgPath(forecast)),
+      separator(),
+      text(forecast + " in x minutes") | center,
+      });
+}
+
 int main(void) { 
   std::vector<std::string> Regions{
     "La Noscea",
@@ -179,30 +195,39 @@ int main(void) {
       curr_zone = LN_Zones[0];
       forecasts = weather_forecast("La Nocea", "Limsa Lominsa");
   }
-  auto h_container = Container::Horizontal({
-    Renderer([&]{ return text(forecasts[1]) | center | flex; }),
-  });
+  
+
+  FlexboxConfig flex_config = FlexboxConfig()
+                                .Set(FlexboxConfig::Direction::Row)
+                                .Set(FlexboxConfig::Wrap::Wrap)
+                                .Set(FlexboxConfig::JustifyContent::Center)
+                                .Set(FlexboxConfig::AlignItems::FlexStart)
+                                .Set(FlexboxConfig::AlignContent::FlexStart);
+
+  auto fbox = Renderer([&]{ 
+      return flexbox({
+          window(text(forecasts[1]), makeForecast(forecasts[1])),
+          window(text(forecasts[2]), makeForecast(forecasts[2])),
+          window(text(forecasts[3]), makeForecast(forecasts[3])),
+          },flex_config); 
+      });
   auto lcont = Container::Vertical({
       Window_Frame("Regions", region_menu),
       tabs,
       });
   auto container = Container::Vertical({ 
       Renderer([&]{
-        std::string img_path = forecasts[0];    
-        std::transform(img_path.begin(), img_path.end(), img_path.begin(), [](char ch) {
-          return ch == ' ' ? '_' : ch;
-        });
-        img_path = "../FFXIV_Weather_Icons/" + img_path + "_icon.webp";
         return hflow({
-          window(text(forecasts[0]),image_view(img_path),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
+          window(text(forecasts[0]),image_view(getImgPath(forecasts[0])),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
           text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is " + forecasts[0]) | center | flex
         }); 
       }),
-      h_container,
+      fbox,
   });
   int left_size = 30;
   auto left = lcont;
   container = ResizableSplitLeft(left, container, &left_size);
+  
   auto renderer =
       Renderer(container, [&] { 
           switch(selected_region){

@@ -14,9 +14,9 @@ FetchContent_MakeAvailable(ftxui ftxui-image-view)
 
 add_library(ffxiv_weather include/weather.h src/weather.cpp)
 
-project(ftxui-starter LANGUAGES CXX VERSION 1.0.0)
-add_executable(ftxui-starter src/TUI.cpp)
-target_link_libraries(ftxui-starter
+project(ffxiv-wtui LANGUAGES CXX VERSION 1.0.0)
+add_executable(ffxiv-wtui src/TUI.cpp)
+target_link_libraries(ffxiv-wtui
   PRIVATE ftxui::screen
   PRIVATE ftxui::dom
   PRIVATE ftxui::component
