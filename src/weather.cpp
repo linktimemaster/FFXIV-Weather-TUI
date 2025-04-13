@@ -22,7 +22,7 @@ std::vector<std::string> weather_forecast(std::string r, std::string z){
 		if(wd.Region == r){
 			for (auto& zd : wd.Zones){
 				if(zd.Zone == z){
-					for(int h = 0; h < 4; h ++){
+					for(int h = 0; h < 10; h ++){
 						//std::cout<<h<<std::endl;
 						unsigned int weather_value = get_weather_value(h);
 						unsigned int total_rate = 0;

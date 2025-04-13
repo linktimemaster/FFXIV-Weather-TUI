@@ -209,6 +209,12 @@ int main(void) {
           window(text(forecasts[1]), makeForecast(forecasts[1])),
           window(text(forecasts[2]), makeForecast(forecasts[2])),
           window(text(forecasts[3]), makeForecast(forecasts[3])),
+          window(text(forecasts[4]), makeForecast(forecasts[4])),
+          window(text(forecasts[5]), makeForecast(forecasts[5])),
+          window(text(forecasts[6]), makeForecast(forecasts[6])),
+          window(text(forecasts[7]), makeForecast(forecasts[7])),
+          window(text(forecasts[8]), makeForecast(forecasts[8])),
+          window(text(forecasts[9]), makeForecast(forecasts[9])),
           },flex_config); 
       });
   auto lcont = Container::Vertical({
