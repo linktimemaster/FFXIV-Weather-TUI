@@ -36,7 +36,10 @@ Element makeForecast(Forcast_S forecast){
   return vbox({
       image_view(getImgPath(forecast.weather)),
       separator(),
-      text(forecast.weather + " in " + std::to_string(time_diff/60) + " minutes") | center,
+      hbox({
+          text(forecast.weather) | bold | underlined,
+          text(" in " + std::to_string(time_diff/60) + " minutes")
+          }) | center,
       });
 }
 
@@ -228,8 +231,13 @@ int main(void) {
         auto time_diff = (forecasts[1].time_start - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count());
         return hflow({
           window(text(forecasts[0].weather),image_view(getImgPath(forecasts[0].weather)),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
-          text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is " + forecasts[0].weather) | center,
-          text("\nFor the next " + std::to_string( time_diff / 60) + "m:" + std::to_string(time_diff % 60) + "s") | center
+          vbox({
+            hbox({
+                text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is "),
+                text(forecasts[0].weather) | bold | underlined
+                }) | center,
+            text("\nFor the next " + std::to_string( time_diff / 60) + "m:" + std::to_string(time_diff % 60) + "s") | center
+          }) | center | flex
         }); 
       }),
       fbox,
