@@ -8,6 +8,11 @@
 #include <cstdint>
 #include <cmath>
 
+struct Forcast_S{
+  std::string weather;
+  long time_start;
+};
+
 struct Weather_Rates{
 	std::string name;
 	int rate;
@@ -466,6 +471,6 @@ const std::vector<Weather_Data> WData = {
 	 */
 };
 
-std::vector<std::string> weather_forecast(std::string r, std::string z);
+std::vector<Forcast_S> weather_forecast(std::string r, std::string z);
 
 #endif //WEATHER_H

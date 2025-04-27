@@ -6,6 +6,7 @@
 #include "image_view.hpp"
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 #include "../include/weather.h"
 
@@ -30,11 +31,12 @@ std::string getImgPath(std::string s){
   return img_path = "../FFXIV_Weather_Icons/" + img_path + "_icon.webp";
 }
 
-Element makeForecast(std::string forecast){
+Element makeForecast(Forcast_S forecast){
+  auto time_diff = (forecast.time_start - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count());
   return vbox({
-      image_view(getImgPath(forecast)),
+      image_view(getImgPath(forecast.weather)),
       separator(),
-      text(forecast + " in x minutes") | center,
+      text(forecast.weather + " in " + std::to_string(time_diff/60) + " minutes") | center,
       });
 }
 
@@ -144,7 +146,7 @@ int main(void) {
   
   auto screen = ScreenInteractive::Fullscreen();
 
-  std::vector<std::string> forecasts;
+  std::vector<Forcast_S> forecasts;
   std::string curr_zone;
   switch(selected_region){
     case 0:
@@ -206,15 +208,15 @@ int main(void) {
 
   auto fbox = Renderer([&]{ 
       return flexbox({
-          window(text(forecasts[1]), makeForecast(forecasts[1])),
-          window(text(forecasts[2]), makeForecast(forecasts[2])),
-          window(text(forecasts[3]), makeForecast(forecasts[3])),
-          window(text(forecasts[4]), makeForecast(forecasts[4])),
-          window(text(forecasts[5]), makeForecast(forecasts[5])),
-          window(text(forecasts[6]), makeForecast(forecasts[6])),
-          window(text(forecasts[7]), makeForecast(forecasts[7])),
-          window(text(forecasts[8]), makeForecast(forecasts[8])),
-          window(text(forecasts[9]), makeForecast(forecasts[9])),
+          window(text(forecasts[1].weather), makeForecast(forecasts[1])),
+          window(text(forecasts[2].weather), makeForecast(forecasts[2])),
+          window(text(forecasts[3].weather), makeForecast(forecasts[3])),
+          window(text(forecasts[4].weather), makeForecast(forecasts[4])),
+         // window(text(forecasts[5].weather), makeForecast(forecasts[5])),
+         // window(text(forecasts[6].weather), makeForecast(forecasts[6])),
+         // window(text(forecasts[7].weather), makeForecast(forecasts[7])),
+         // window(text(forecasts[8].weather), makeForecast(forecasts[8])),
+         // window(text(forecasts[9].weather), makeForecast(forecasts[9])),
           },flex_config); 
       });
   auto lcont = Container::Vertical({
@@ -223,9 +225,11 @@ int main(void) {
       });
   auto container = Container::Vertical({ 
       Renderer([&]{
+        auto time_diff = (forecasts[1].time_start - std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count());
         return hflow({
-          window(text(forecasts[0]),image_view(getImgPath(forecasts[0])),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
-          text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is " + forecasts[0]) | center | flex
+          window(text(forecasts[0].weather),image_view(getImgPath(forecasts[0].weather)),EMPTY) | size(WIDTH, LESS_THAN, 65),// | size(HEIGHT, EQUAL, 20),
+          text("The weather in " + curr_zone + ", " + Regions[selected_region] + " is " + forecasts[0].weather) | center,
+          text("\nFor the next " + std::to_string( time_diff / 60) + "m:" + std::to_string(time_diff % 60) + "s") | center
         }); 
       }),
       fbox,
